@@ -91,7 +91,12 @@
 		.moveSelectComponent{min-height: 20em;}
 		.moveSelectComponent ul{border:1px solid #dedede;height: 100%;padding: 2px;}
 		.moveSelectComponent ul li{cursor: move;list-style: none;padding: 8px;}
-		.secCol{border:1px solid #dedede;}
+        .moveSelectComponent ul li.active{background: #bb2526;color: #ffffff;}
+        .moveSelectComponent .secCol button{border:1px solid #dedede;color: #999999;
+            font-weight: bold;margin-top: 10px;
+        }
+		.secCol{border:1px solid #dedede;padding-left: 12px;}
+        .secCol .wrapper{height: 5em;padding-top: 6em;margin: 0 auto;text-align: center;}
 		.selectors{float: right;}
 		.selectors input[type=checkbox]{display: inline-block;padding:0 2em;min-width: 5em;}
 	</style>
@@ -164,15 +169,23 @@
 		<div class='row moveSelectComponent'>
 			<div class="col-sm-4 firstCol">
 				<ul id="sortable1" class="connectedSortable">
-					<li class="ui-state-default" ng-attr-id="{{item.id}}" ng-repeat="item in orderListItems.left">{{item.itemText}}</li>
+                    <li class="ui-state-default" ng-attr-id="{{item.id}}"
+                    ng-class="{'active': item.id == activeItem}" ng-click="selectForMove(item.id)"
+                    ng-repeat="item in orderListItems.left">{{item.itemText}}</li>
 				</ul>
 			</div>
-			<div class="col-sm-1 secCol">Sec Col</div>
+			<div class="col-sm-1 secCol">
+                <div class='wrapper'>
+                    <button type='button' class="btn btn-light" ng-click="moveToRight()">&#62;&#62;</button>
+                    <button type='button' class="btn btn-light">&#60;&#60;</button>
+                </div>
+            </div>
 			<div class="col-sm-7 thirdCol">
 				<ul id="sortable2" class="connectedSortable">
-					<li class="ui-state-default" ng-attr-id="{{item.id}}" ng-repeat="item in orderListItems.right">
-						{{item.itemText}}
-						<span class="selectors" style="float-right"><input type="checkbox" style="padding: 0 2em;"><input type="checkbox" style="padding: 0 2em;"></span>
+                    <li class="ui-state-default" ng-attr-id="{{item.id}}" 
+                        ng-class="{'active': item.id == activeItem}" ng-click="selectForMove(item.id)"
+                        ng-repeat="item in orderListItems.right">{{item.itemText}}
+						<span class="selectors" style="float:right"><input type="checkbox" style="padding: 0 2em;"><input type="checkbox" style="padding: 0 2em;"></span>
 					</li>	
 				</ul>
 			</div>
