@@ -104,7 +104,7 @@ app.controller('MainCtrl', function($scope,$filter,myService) {
 	}
 
 
-
+	$scope.activeItem = '';
 	var manualObj, callOutObj ;
 	_initializeComponent = function(){
 		var src , dest;
@@ -157,7 +157,9 @@ app.controller('MainCtrl', function($scope,$filter,myService) {
 			}
 		}).disableSelection();
 	}
-	
+	$scope.selectForMove = function(id){
+		$scope.activeItem = id;
+	}
 	$scope.orderTypeMode = "Manual";
 	$scope.orderListItems = [];
 	_getALLValService = function(){
@@ -185,6 +187,28 @@ app.controller('MainCtrl', function($scope,$filter,myService) {
 			default: break;
 		}
 	});
+	//Move right function 
+	$scope.moveToRight = function(){
+		if($(".firstCol li.active").length == 0) return; 
+		var indxToMove = $(".firstCol li.active").index();
+		$scope.activeItem = '';
+		switch($scope.orderTypeMode){
+			case "Manual": 
+				var removed = manualObj.left.splice(indxToMove,1);
+				manualObj.right.push(removed[0]);
+				$scope.orderListItems = manualObj;
+				break;
+			case "Callout": 
+				var removed = callOutObj.left.splice(indxToMove,1);
+				callOutObj.right.push(removed[0]);
+				$scope.orderListItems = callOutObj;
+				break;	
+		}
+	}
+	//Move left function 
+	$scope.moveToLeft = function(){
+		
+	}
 });
 
 app.directive('myDirective', function(myService) {
